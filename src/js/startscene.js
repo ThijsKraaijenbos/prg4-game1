@@ -6,7 +6,7 @@ export class StartScreen extends Scene {
     onInitialize(engine) {
         // Create and configure the title label
         const title = new Label({
-            text: 'RISE OF THE EVIL BLOBS',
+            text: 'RISE OF THE BLOBS',
             pos: new Vector(engine.drawWidth / 2, 100),
             font: new Font({
                 size: 40,
