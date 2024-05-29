@@ -1,23 +1,29 @@
 import '../css/style.css'
-import { Actor, Engine, Vector } from "excalibur"
-import { Resources, ResourceLoader } from './resources.js'
+import { Engine, Timer, Vector } from "excalibur";
+import { Resources, ResourceLoader } from './resources.js';
+import { Level } from './level.js';
+import { GameOver } from './gameover.js';
+import { StartScreen } from './startscene.js';
 
 export class Game extends Engine {
+    money = 0;
+    moneyLabel;
+    enemiesSpawned = 0;
+    waveCount = 0;
 
     constructor() {
-        super({ width: 800, height: 600 })
-        this.start(ResourceLoader).then(() => this.startGame())
+        super({ width: 800, height: 600, antialiasing: false });
+        this.start(ResourceLoader).then(() => this.startGame());
     }
 
     startGame() {
-        console.log("start de game!")
-        const fish = new Actor()
-        fish.graphics.use(Resources.Fish.toSprite())
-        fish.pos = new Vector(400, 300)
-        fish.vel = new Vector(-10, 0)
-        this.add(fish)
+        console.log("start de game!");
+
+        this.add('start', new StartScreen())
+        this.add('level', new Level())
+        this.add('game-over', new GameOver())
+        this.goToScene('start')
     }
 }
 
-new Game()
-// test voor commit
+new Game();
