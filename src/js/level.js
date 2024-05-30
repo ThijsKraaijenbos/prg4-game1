@@ -6,6 +6,7 @@ import { Enemy } from './enemy.js';
 import { UI } from './UI.js';
 import { TowerLocation } from './towerlocations.js';
 import { GameOver } from './gameover.js';
+import { BossEnemy } from './boss.js';
 
 export class Level extends Scene {
     money = 0;
@@ -64,11 +65,18 @@ export class Level extends Scene {
     }
 
     spawnEnemy() {
+        this.bossSpawned = false; //Variable to check if boss already spawned in current wave (so it only spawns 1 max)
         const wave = () => {
             // Set the number of enemies that spawn
             if (this.enemiesSpawned < 5) {
-                this.add(new Enemy());
-                this.enemiesSpawned += 1;
+                const gooberChance = Math.ceil(Math.random() * 20) //1 in 20 chance to spawn a goober (boss enemy)
+                if (gooberChance === 1 && !this.bossSpawned) {
+                    this.add(new BossEnemy());
+                    this.bossSpawned = true;
+                } else {
+                    this.add(new Enemy());
+                }
+                this.enemiesSpawned++;
                 if (this.enemiesSpawned === 1) {
                     this.waveCount++;
                     console.log(`Waves count: ${this.waveCount}`);
@@ -79,6 +87,7 @@ export class Level extends Scene {
             if (this.enemiesSpawned >= 5) {
                 this.singleEnemyTimer?.stop();
                 this.enemiesSpawned = 0;
+                this.bossSpawned = false;
             }
         };
 
@@ -107,8 +116,8 @@ export class Level extends Scene {
         moneyTimer.start();
     }
 
-    addMoney() {
-        this.money += 25;
+    addMoney(amountToAdd) {
+        this.money += amountToAdd;
         this.updateMoneyLabel();
     }
 

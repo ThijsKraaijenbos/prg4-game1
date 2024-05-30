@@ -1,4 +1,5 @@
 import { ImageSource, Sound, Resource, Loader } from 'excalibur'
+import { BossEnemy } from './boss'
 
 const Resources = {
     Scout: new ImageSource('images/Scout.png'),
@@ -11,7 +12,7 @@ const Resources = {
     Bullet: new ImageSource('images/Bullet.png'),
     Towerlocation: new ImageSource('images/towerLocation.png'),
     SwitchArrows: new ImageSource('images/switch_arrows.png'),
-
+    BossEnemy: new ImageSource('images/bossEnemy.png'),
 }
 
 const resourceArray = []

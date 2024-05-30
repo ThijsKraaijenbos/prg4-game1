@@ -37,7 +37,7 @@ export class Enemy extends Actor {
             // Create action queue
             // Forward path (skip first spawn point)
             for (let i = 1; i < path.length; i++) {
-                ctx.moveTo(path[i].x, path[i].y, 590 + (engine.waveCount * 5));
+                ctx.moveTo(path[i].x, path[i].y, 90 + (engine.waveCount * 5));
             }
         });
 
@@ -46,6 +46,6 @@ export class Enemy extends Actor {
 
     removeEnemy(engine) {
         this.kill();
-        engine.ui.updateHealthBar();
+        engine.ui.updateHealthBar(0.1);
     }
 }

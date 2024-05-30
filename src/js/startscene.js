@@ -29,13 +29,19 @@ export class StartScreen extends Scene {
             text: 'Start Game',
             font: new Font({
                 size: 20,
-                color: Color.White,
+                color: Color.Black,
+                bold: true,
                 family: 'Arial',
-            })
+                shadow: {
+                    blur: 7,
+                    offset: new Vector(0, 0),
+                    color: Color.Gray
+                }
+            }),
         });
 
         // Center the button text within the button
-        startButtonText.pos = new Vector(startButton.width / 2 - startButtonText.width / 2, startButton.height / 2 - startButtonText.height / 2);
+        startButtonText.anchor = new Vector(0.5, 0.5)
 
         startButton.addChild(startButtonText);
 
