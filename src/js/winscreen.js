@@ -28,7 +28,7 @@ export class WinScreen extends Scene {
         // Create and configure the start button
         const mainMenuButton = new Actor({
             pos: new Vector(engine.drawWidth / 2, 300),
-            width: 150,
+            width: 310,
             height: 50,
             color: Color.Green,
         });
