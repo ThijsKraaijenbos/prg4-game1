@@ -103,7 +103,7 @@ export class Level extends Scene {
     addMoneyTimer() {
         const moneyTimer = new Timer({
             fcn: () => {
-                this.money += 1;
+                this.money += 10;
                 this.updateMoneyLabel();
             },
             interval: 500,
