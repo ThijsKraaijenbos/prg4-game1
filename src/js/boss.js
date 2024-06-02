@@ -44,11 +44,11 @@ export class BossEnemy extends Enemy {
 
             // Create action queue with delays
             for (let i = 1; i < path.length; i++) {
-                ctx.moveTo(path[i].x, path[i].y, 150 + (engine.waveCount * 5));
+                ctx.moveTo(path[i].x, path[i].y, 190 + (engine.waveCount * 5));
                 ctx.delay(Math.random() * 1000); // Add a random delay of max 1 second
 
                 if (movedBack === 0) {
-                    const moveBack = Math.floor(Math.random() * 3); // random 1 in 3 chance to move back
+                    const moveBack = Math.floor(Math.random() * 4); // random 1 in 4 chance to move back
                     if (moveBack === 1 && i > 1) { //i > 1 to check if it's not on the first position.
                         i -= 2;
                         movedBack = 2;

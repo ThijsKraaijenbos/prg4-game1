@@ -4,6 +4,7 @@ import { Resources, ResourceLoader } from './resources.js';
 import { Level } from './level.js';
 import { GameOver } from './gameover.js';
 import { StartScreen } from './startscene.js';
+import { WinScreen } from './winscreen.js';
 
 export class Game extends Engine {
     money = 0;
@@ -22,6 +23,7 @@ export class Game extends Engine {
         this.add('start', new StartScreen())
         this.add('level', new Level())
         this.add('game-over', new GameOver())
+        this.add('winscreen', new WinScreen())
         this.goToScene('start')
     }
 }

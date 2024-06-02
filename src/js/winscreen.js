@@ -1,12 +1,10 @@
 import '../css/style.css';
 import { Actor, Engine, Scene, Vector, Label, Color, Font } from 'excalibur';
-import { Resources, ResourceLoader } from './resources.js';
 
-export class StartScreen extends Scene {
+export class WinScreen extends Scene {
     onInitialize(engine) {
-        // Create and configure the title label
         const title = new Label({
-            text: 'Rise Of The Blobs',
+            text: 'You won!',
             pos: new Vector(engine.drawWidth / 2, 100),
             font: new Font({
                 size: 40,
@@ -16,19 +14,19 @@ export class StartScreen extends Scene {
         });
         title.anchor = new Vector(0.5, 0.5)
 
-        const title2 = new Label({
-            text: 'Get to wave 50 to beat the game',
-            pos: new Vector(engine.drawWidth / 2, 170),
+        const waveScore = new Label({
+            text: `Good job, You got to wave ${engine.waveCount}`,
+            pos: new Vector(engine.drawWidth / 2, 200),
             font: new Font({
                 size: 30,
                 color: Color.White,
                 family: 'Arial',
             })
         });
-        title2.anchor = new Vector(0.5, 0.5)
+        waveScore.anchor = new Vector(0.5, 0.5)
 
         // Create and configure the start button
-        const startButton = new Actor({
+        const mainMenuButton = new Actor({
             pos: new Vector(engine.drawWidth / 2, 300),
             width: 150,
             height: 50,
@@ -36,8 +34,8 @@ export class StartScreen extends Scene {
         });
 
         // Add a label to the start button
-        const startButtonText = new Label({
-            text: 'Start Game',
+        const mainMenuButtonText = new Label({
+            text: 'Click to go back to main menu!',
             font: new Font({
                 size: 20,
                 color: Color.Black,
@@ -47,18 +45,18 @@ export class StartScreen extends Scene {
         });
 
         // Center the button text within the button
-        startButtonText.anchor = new Vector(0.5, 0.5)
+        mainMenuButtonText.anchor = new Vector(0.5, 0.5)
+        mainMenuButton.addChild(mainMenuButtonText);
 
-        startButton.addChild(startButtonText);
-
-        // Add an event listener for the start button
-        startButton.on('pointerup', () => {
-            engine.goToScene('level');
+        mainMenuButton.on('pointerup', () => {
+            engine.goToScene('start');
         });
 
         // Add the title and start button to the scene
         this.add(title);
-        this.add(title2);
-        this.add(startButton);
+        this.add(waveScore);
+        this.add(mainMenuButton);
+
+        console.log(engine.waveCount) //Put wavecount here
     }
 }

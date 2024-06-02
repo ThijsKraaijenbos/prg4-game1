@@ -22,52 +22,61 @@ export class Bullet extends Actor {
 
     hitEnemy(event, engine) {
         if (event.other instanceof BossEnemy) {
-            if (event.other.hit === false) { //Check if enemy has already been hit, if it has, the bullet passes through while its dying.
-                this.kill();
+            const killChance = Math.ceil(Math.random() * 2) // Boss has a 50% chance to survive a bullet.
+            console.log(killChance)
+
+            if (killChance === 1) {
+
+                //Check if boss has been hit (allows for other bullets to pass through)
+                if (event.other.hit === false) {
+                    this.kill();
+                }
+                event.other.hit = true;
+
+                //Add money & do particles
+                engine.currentScene.addMoney(50);
+                event.other.actions.clearActions();
+                const emitter = new ParticleEmitter({
+                    emitterType: EmitterType.Circle,
+                    radius: 3,
+                    minVel: 160,
+                    maxVel: 360,
+                    minAngle: 0,
+                    maxAngle: 6.2,
+                    isEmitting: true,
+                    emitRate: 50,
+                    opacity: 1,
+                    fadeFlag: true,
+                    particleLife: 800,
+                    maxSize: 5,
+                    minSize: 1,
+                    startSize: 0,
+                    endSize: 0,
+                    acceleration: new Vector(0, 494),
+                    beginColor: Color.Violet,
+                    endColor: Color.Azure,
+                });
+                event.other.addChild(emitter);
+
+                //Wait 1.5 sec to kill (so particles show for 1.5s)
+                const waitToKill = new Timer({
+                    fcn: () => {
+                        if (event.other.scene) {
+                            event.other.kill();
+                        }
+                    },
+                    interval: 1500,
+                    repeats: false
+                });
+                engine.currentScene.add(waitToKill);
+                waitToKill.start();
             }
-            event.other.hit = true;
-
-            engine.currentScene.addMoney(50);
-            event.other.actions.clearActions();
-            const emitter = new ParticleEmitter({
-                emitterType: EmitterType.Circle,
-                radius: 3,
-                minVel: 160,
-                maxVel: 360,
-                minAngle: 0,
-                maxAngle: 6.2,
-                isEmitting: true,
-                emitRate: 50,
-                opacity: 1,
-                fadeFlag: true,
-                particleLife: 800,
-                maxSize: 5,
-                minSize: 1,
-                startSize: 0,
-                endSize: 0,
-                acceleration: new Vector(0, 494),
-                beginColor: Color.Violet,
-                endColor: Color.Azure,
-            });
-
-            event.other.addChild(emitter);
-
-            const waitToKill = new Timer({
-                fcn: () => {
-                    if (event.other.scene) {
-                        event.other.kill();
-                    }
-                },
-                interval: 1500,
-                repeats: false
-            });
-            engine.currentScene.add(waitToKill);
-            waitToKill.start();
         } else if (event.other instanceof Enemy) {
-            engine.currentScene.addMoney(20);
+            engine.currentScene.addMoney(10);
             this.kill();
             event.other.kill();
         }
+
     }
 
     removeBullet() {

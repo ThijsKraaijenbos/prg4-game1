@@ -1,21 +1,19 @@
+// @ts-nocheck
 import '../css/style.css';
 import { Engine, KillEvent, Scene, Timer, Vector } from "excalibur";
-import { Resources, ResourceLoader } from './resources.js';
 import { Background } from './background.js';
 import { Enemy } from './enemy.js';
 import { UI } from './UI.js';
 import { TowerLocation } from './towerlocations.js';
-import { GameOver } from './gameover.js';
 import { BossEnemy } from './boss.js';
 
 export class Level extends Scene {
     money = 0;
     enemiesSpawned = 0;
-    waveCount = 0;
 
     onActivate(ctx) {
         super.onActivate(ctx);
-        this.engine.currentScene.clear()
+        this.engine.currentScene.clear();
 
         // Reset damage taken
         if (this.UI) {
@@ -25,9 +23,8 @@ export class Level extends Scene {
         // Reset other properties if needed
         this.money = 0;
         this.enemiesSpawned = 0;
-        this.waveCount = 0;
+        this.engine.waveCount = 0; // Use engine's waveCount
         this.updateMoneyLabel();
-
 
         // Add background & money
         this.add(new Background());
@@ -65,12 +62,12 @@ export class Level extends Scene {
     }
 
     spawnEnemy() {
-        this.bossSpawned = false; //Variable to check if boss already spawned in current wave (so it only spawns 1 max)
+        this.bossSpawned = false; // Variable to check if boss already spawned in current wave (so it only spawns 1 max)
         const wave = () => {
             // Set the number of enemies that spawn
             if (this.enemiesSpawned < 5) {
-                const gooberChance = Math.ceil(Math.random() * 20) //1 in 20 chance to spawn a goober (boss enemy)
-                if (gooberChance === 1 && !this.bossSpawned) {
+                const gooberChance = Math.ceil(Math.random() * 15); // 1 in 15 chance to spawn a goober (boss enemy)
+                if (gooberChance === 1 && !this.bossSpawned && this.engine.waveCount > 2) {
                     this.add(new BossEnemy());
                     this.bossSpawned = true;
                 } else {
@@ -78,8 +75,8 @@ export class Level extends Scene {
                 }
                 this.enemiesSpawned++;
                 if (this.enemiesSpawned === 1) {
-                    this.waveCount++;
-                    console.log(`Waves count: ${this.waveCount}`);
+                    this.engine.waveCount++; // Update engine's waveCount
+                    console.log(`Wave count: ${this.engine.waveCount}`);
                 }
             }
 
@@ -124,6 +121,12 @@ export class Level extends Scene {
     updateMoneyLabel() {
         if (this.UI) {
             this.UI.updateMoney(this.money);
+        }
+    }
+
+    onPreUpdate() {
+        if (this.engine.waveCount === 50) {
+            this.engine.goToScene('winscreen')
         }
     }
 }

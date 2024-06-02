@@ -1,6 +1,7 @@
 import { Actor, Color, Font, Label, ScreenElement, Vector } from "excalibur";
 import { Resources } from "./resources";
 import { TowerSelector } from "./towerselector";
+import { GameOver } from "./gameover";
 
 export class UI extends ScreenElement {
     constructor() {
@@ -92,6 +93,7 @@ export class UI extends ScreenElement {
         this.healthbar.scale = new Vector(1 - this.damageTaken, 1); // Reduce the health bar
         if (this.damageTaken > 0.9) {
             this._engine.goToScene('game-over');
+
         }
     }
 

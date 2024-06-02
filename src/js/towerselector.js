@@ -7,11 +7,11 @@ export class TowerSelector extends Actor {
 
         // Scout always needs to be the last object in this array, to make sure the scrolling between types is handled correctly.
         const typeOfTowerArray = [
-            { type: "Minigunner", FBR: 15, RS: 8000, AS: 20, price: 150, BVX: 1000, BVY: "Math.floor(Math.random() * 90) - 45" },
-            { type: "Sniper", FBR: 1, RS: 2000, AS: 0, price: 250, BVX: 2200, BVY: 0 },
-            { type: "Turret", FBR: 7, RS: 7000, AS: 1, price: 750, BVX: "700 + Math.floor(Math.random() * 200)", BVY: "Math.floor(Math.random() * 500) - 250" },
-            { type: "Starburst", FBR: 50, RS: 10000, AS: 0, price: 2500, BVX: "Math.floor(Math.random() * -3000) + 1500", BVY: "Math.floor(Math.random() * -3000) + 1500" },
-            { type: "Scout", FBR: 3, RS: 4000, AS: 100, price: 25, BVX: 800, BVY: 0 },
+            { type: "Minigunner", FBR: 15, RS: 8000, AS: 20, price: 250, BVX: 1000, BVY: "Math.floor(Math.random() * 90) - 45" },
+            { type: "Sniper", FBR: 1, RS: 2500, AS: 0, price: 500, BVX: 2800, BVY: 0 },
+            { type: "Turret", FBR: 8, RS: 5000, AS: 1, price: 1500, BVX: "700 + Math.floor(Math.random() * 200)", BVY: "Math.floor(Math.random() * 500) - 250" },
+            { type: "Starburst", FBR: 50, RS: 10000, AS: 0, price: 3000, BVX: "Math.floor(Math.random() * -3000) + 1500", BVY: "Math.floor(Math.random() * -3000) + 1500" },
+            { type: "Scout", FBR: 3, RS: 4000, AS: 100, price: 25, BVX: 1000, BVY: 0 },
         ];
         engine.typeOfTower = typeOfTowerArray[typeOfTowerArray.length - 1].type;
         engine.FBR = typeOfTowerArray[typeOfTowerArray.length - 1].FBR;
